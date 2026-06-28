@@ -23,7 +23,7 @@ pritunl-iac/
 
 - Terraform >= 1.5 (import blocks), Terragrunt, AWS CLI configured for the
   account that owns the box (region us-east-1).
-- The existing instance `i-02fb217a452a17b43` running.
+- The existing instance `i-02fb217a45xxxx` running.
 
 ---
 
@@ -34,7 +34,7 @@ paste them into the `<...>` placeholders in the leaf `terragrunt.hcl` files.
 
 ```bash
 # Instance details: SG id, EIP allocation, subnet, key name, AMI
-aws ec2 describe-instances --instance-ids i-02fb217a452a17b43 \
+aws ec2 describe-instances --instance-ids i-02fb217xxxxxx \
   --query 'Reservations[0].Instances[0].[
     SecurityGroups[0].GroupId,
     KeyName,
@@ -54,13 +54,13 @@ aws ec2 describe-security-group-rules \
 
 # EIP allocation id (eipalloc-...) for the address on the instance
 aws ec2 describe-addresses \
-  --filters Name=instance-id,Values=i-02fb217a452a17b43 \
+  --filters Name=instance-id,Values=i-02fb217a45xxxxx \
   --query 'Addresses[0].AllocationId' --output text
 ```
 
 The four ingress rule ids are already filled in (captured from the console):
-openvpn `sgr-096c72f0d93df3f6b`, wireguard `sgr-0ea5b0fece653651e`,
-https `sgr-07f64b393e3338136`, ssh `sgr-007ce2d5d94821470`. Verify they still
+openvpn `sgr-096c72fxxxxxx`, wireguard `sgr-0ea5b0fecexxxx`,
+https `sgr-07f64b39xxxxxx`, ssh `sgr-007ce2d5d94xxxxx`. Verify they still
 match if you've edited rules since.
 
 ### Fill in the placeholders
@@ -122,8 +122,7 @@ Fix the input to match reality and re-plan.
 ### After the first apply
 
 The `generate "imports"` blocks are harmless to leave (import is a no-op once
-state holds the resource), but you can delete those generate blocks from the
-leaf configs to keep things tidy.
+state holds the resource)
 
 ---
 
