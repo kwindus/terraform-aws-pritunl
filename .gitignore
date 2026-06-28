@@ -23,3 +23,6 @@ ansible/inventory/hosts.ini
 # Keys — never commit
 *.pem
 *.key
+
+# MAC
+.DS_Store
